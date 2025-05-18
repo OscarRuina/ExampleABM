@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Lista de Ejemplos para el rol ADMIN</title>
+</head>
+<body>
+<h1>Todos los Ejemplos eliminados o no</h1>
+<br>
+<a th:href="@{/example/form}">Nuevo</a>
+<a th:href="@{/example/list}">Ver activos</a>
+<br>
+<br>
+<table>
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Eliminado</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="example : ${examples}">
+        <td th:text="${example.name}"></td>
+        <td th:text="${example.price}"></td>
+        <td th:text="${example.softDeleted} ? 'Sí' : 'No'"></td>
+        <td>
+            <a th:href="@{/example/edit/{id}(id=${example.id})}">Editar</a>
+            <form th:if="!${example.softDeleted}" th:action="@{/example/delete/{id}(id=${example.id})}" method="post" style="display:inline;">
+                <button type="submit">Eliminar</button>
+            </form>
+            <form th:if="${example.softDeleted}" th:action="@{/example/restore/{id}(id=${example.id})}" method="post" style="display:inline;">
+                <button type="submit">Restaurar</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<div>
+    <span th:text="'Página ' + ${examples.number + 1} + ' de ' + ${examples.totalPages}"></span>
+</div>
+<div>
+    <ul>
+        <li th:if="${examples.hasPrevious()}">
+            <a th:href="@{/example/admin/list(page=${examples.number - 1}, size=${examples.size})}">Anterior</a>
+        </li>
+        <li th:each="pageNum : ${#numbers.sequence(0, examples.totalPages - 1)}"
+            th:classappend="${pageNum == examples.number} ? 'active'">
+            <a th:href="@{/example/admin/list(page=${pageNum}, size=${examples.size})}"
+               th:text="${pageNum + 1}"></a>
+        </li>
+        <li th:if="${examples.hasNext()}">
+            <a th:href="@{/example/admin/list(page=${examples.number + 1}, size=${examples.size})}">Siguiente</a>
+        </li>
+    </ul>
+</div>
+<br>
+<br>
+<a th:href="@{/index}">Volver al index</a>
+</body>
+</html>
