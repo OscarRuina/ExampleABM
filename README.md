@@ -3,7 +3,7 @@
 Pasos a seguir para levantar el proyecto:
  * Version de Java 17 o superior.
  * Maven 3 o superior.
- * Plugin de lombok confidurado en su IDE.
+ * Plugin de lombok configurado en su IDE.
  * MySQL como Base de Datos.
  * Crear una Base de Datos con la siguiente instruccion **create database nombre;** 
  * Abrir el proyecto y revisar que se descarguen las dependencias, en caso de que no abrir una terminal en la raiz del proyecto y ejecutar esta instruccion: **mvn clean install**
